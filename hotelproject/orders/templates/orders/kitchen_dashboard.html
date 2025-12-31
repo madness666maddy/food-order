@@ -1,0 +1,35 @@
+<h2>👨‍🍳 Kitchen Dashboard</h2>
+
+{% for order in orders %}
+    <div style="border:1px solid black; padding:10px; margin:10px;">
+
+        <h3>Order #{{ order.id }}</h3>
+        <p><b>Customer:</b> {{ order.customer_name }}</p>
+
+        <p><b>Foods:</b>
+            {% for food in order.foods.all %}
+                {{ food.name }},
+            {% empty %}
+                None
+            {% endfor %}
+        </p>
+
+        <p><b>Combos:</b>
+            {% for combo in order.combos.all %}
+                {{ combo.combo_name }},
+            {% empty %}
+                None
+            {% endfor %}
+        </p>
+
+        <p><b>Total:</b> ₹{{ order.total_amount }}</p>
+        <p><b>Status:</b> {{ order.order_status }}</p>
+
+        {% if order.order_status == "Pending" %}
+            <a href="/kitchen/update/{{ order.id }}/Preparing/">Start Preparing</a>
+        {% elif order.order_status == "Preparing" %}
+            <a href="/kitchen/update/{{ order.id }}/Ready/">Mark Ready</a>
+        {% endif %}
+
+    </div>
+{% endfor %}

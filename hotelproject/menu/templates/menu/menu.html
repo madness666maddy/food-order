@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Menu</title>
+</head>
+<body>
+
+<h2>Food Items</h2>
+<form method="POST" action="/order/">
+    {% csrf_token %}
+
+    {% for food in foods %}
+        <input type="checkbox" name="foods" value="{{ food.id }}">
+        {{ food.name }} - ₹{{ food.price }}
+        <br>
+    {% empty %}
+        <p>No food items available</p>
+    {% endfor %}
+
+    <h2>Combo Items</h2>
+
+    {% for combo in combos %}
+        <input type="checkbox" name="combos" value="{{ combo.id }}">
+        {{ combo.name }} - ₹{{ combo.combo_price }}
+        <br>
+    {% empty %}
+        <p>No combos available</p>
+    {% endfor %}
+
+    <br>
+    <label>Your Name:</label>
+    <input type="text" name="customer_name" required>
+    <br><br>
+
+    <button type="submit">Place Order</button>
+</form>
+
+</body>
+</html>
